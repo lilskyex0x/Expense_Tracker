@@ -4,7 +4,7 @@ const generateId = () => {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
 };
 
-function ExpenseForm() {
+function ExpenseForm({ onAddExpense }) {
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
@@ -21,7 +21,7 @@ function ExpenseForm() {
             date,
         };
 
-        console.log(newExpense);
+        onAddExpense(newExpense);
 
         setTitle('');
         setAmount('');
