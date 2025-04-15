@@ -17,6 +17,8 @@ function App() {
     localStorage.setItem("expenses", JSON.stringify(expenses))
   }, [expenses])
 
+  const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+
   const handleAddExpense = (expense) => {
     setExpenses((prevExpenses) => [expense, ...prevExpenses])
   };
@@ -26,6 +28,7 @@ function App() {
   return (
     <>
       <h1>Expense Tracker</h1>
+      <h2>Total: ${total.toFixed(2)}</h2>
       <ExpenseForm onAddExpense={handleAddExpense} />
       <ul>
         {expenses.map((expense) => (
