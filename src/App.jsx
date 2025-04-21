@@ -17,18 +17,35 @@ function App() {
     localStorage.setItem("expenses", JSON.stringify(expenses))
   }, [expenses])
 
-  const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  const currentYear = new Date().getFullYear()
+  const currentMonth = new Date().getMonth();
+
+  const monthlyExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+    return (
+      expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear
+    )
+  });
+
+  const monthlyTotal = monthlyExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+
+
+  const today = new Date().toISOString().split("T")[0]; const todaysExpenses = expenses.filter(expense => expense.date === today);
+  const todayTotal = todaysExpenses.reduce((acc, e) => acc + e.amount, 0);
+
 
   const handleAddExpense = (expense) => {
     setExpenses((prevExpenses) => [expense, ...prevExpenses])
   };
 
+  const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
   console.log(localStorage)
 
   return (
     <>
       <h1>Expense Tracker</h1>
-      <h2>Total: ${total.toFixed(2)}</h2>
+      <h2>Today's Total: ${todayTotal.toFixed(2)}</h2>
+      <h3>Total: ${total.toFixed(2)}</h3>
       <ExpenseForm onAddExpense={handleAddExpense} />
       <ul>
         {expenses.map((expense) => (
@@ -41,6 +58,7 @@ function App() {
           </li>
         ))}
       </ul>
+      <h2>This Month's Total: ${monthlyTotal.toFixed(2)}</h2>
     </>
   )
 }
