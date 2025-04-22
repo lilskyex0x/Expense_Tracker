@@ -1,4 +1,7 @@
-const ExpenseItem = ({ title, amount, date, category }) => {
+const ExpenseItem = ({ title, amount, date, category, id, onDelete }) => {
+    const deleteExpense = () => {
+        onDelete(id);
+    }
     return (
         <div className="expense-item">
             <div>
@@ -7,7 +10,9 @@ const ExpenseItem = ({ title, amount, date, category }) => {
             </div>
             <div>${amount}</div>
             <div>{date}</div>
+            <button onClick={deleteExpense}>Delete</button>
         </div>
+
     );
 };
 
