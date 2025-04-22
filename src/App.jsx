@@ -38,6 +38,10 @@ function App() {
     setExpenses((prevExpenses) => [expense, ...prevExpenses])
   };
 
+  const handleDeleteExpense = (id) => {
+    setExpenses(expenses.filter((expense) => expense.id !== id))
+  };
+
   const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
   console.log(localStorage)
 
@@ -51,6 +55,8 @@ function App() {
         {expenses.map((expense) => (
           <li key={expense.id}>
             <ExpenseItem
+              onDelete={handleDeleteExpense}
+              id={expense.id}
               title={expense.title}
               amount={expense.amount}
               category={expense.category}
